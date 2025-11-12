@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Route, Routes, Navigate } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import NewIssue from "./pages/NewIssue.jsx";
@@ -22,6 +22,16 @@ function isAdmin() {
   } catch { return false; }
 }
 export default function App() {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    async function load() {
+      try {
+        const r = await (await import("./api.js")).me();
+        setUser(r);
+      } catch {}
+    }
+    if (isAuth()) load();
+  }, []);
   return (
     <div className="app">
       <header className="header">
@@ -30,7 +40,10 @@ export default function App() {
           <Link to="/new-issue">Nova denúncia</Link>
           <Link to="/my-issues">Minhas denúncias</Link>
           {isAuth() ? (
-            <button onClick={() => { localStorage.removeItem("token"); location.href = "/"; }}>Sair</button>
+            <>
+              <span>{user ? `Olá, ${user.name}` : ""}</span>
+              <button onClick={() => { localStorage.removeItem("token"); location.href = "/"; }}>Sair</button>
+            </>
           ) : (
             <>
               <Link to="/login">Entrar</Link>

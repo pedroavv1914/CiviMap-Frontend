@@ -8,6 +8,11 @@ export async function signup({ name, email, password }) {
   if (!r.ok) throw new Error("signup_failed");
   return r.json();
 }
+export async function me() {
+  const r = await fetch(BASE + "/auth/me", { headers: { ...authHeader() } });
+  if (!r.ok) throw new Error("me_failed");
+  return r.json();
+}
 export async function login({ email, password }) {
   const r = await fetch(BASE + "/auth/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, password }) });
   if (!r.ok) throw new Error("login_failed");
