@@ -1,0 +1,9 @@
+.app{font-family:system-ui,Arial,sans-serif}
+.header{display:flex;gap:12px;padding:12px;border-bottom:1px solid #ddd}
+.header a{margin-right:12px}
+.form{display:flex;flex-direction:column;gap:8px;padding:12px}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;padding:12px}
+.card{border:1px solid #ddd;border-radius:8px;padding:12px}
+.filters{display:flex;gap:8px;align-items:center;padding:12px}
+.detail{padding:12px}
+.comments{display:flex;flex-direction:column;gap:8px;margin-top:8px}
