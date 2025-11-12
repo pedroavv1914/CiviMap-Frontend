@@ -51,3 +51,18 @@ export async function postComment(id, content) {
   if (!r.ok) throw new Error("comment_failed");
   return r.json();
 }
+export async function getStatusHistory(id) {
+  const r = await fetch(BASE + "/issues/" + id + "/status-history");
+  if (!r.ok) throw new Error("status_history_failed");
+  return r.json();
+}
+export async function getAdminStats() {
+  const r = await fetch(BASE + "/admin/issues/stats", { headers: { ...authHeader() } });
+  if (!r.ok) throw new Error("stats_failed");
+  return r.json();
+}
+export async function patchIssueStatus(id, new_status) {
+  const r = await fetch(BASE + "/issues/" + id + "/status", { method: "PATCH", headers: { "Content-Type": "application/json", ...authHeader() }, body: JSON.stringify({ new_status }) });
+  if (!r.ok) throw new Error("patch_status_failed");
+  return r.json();
+}

@@ -6,8 +6,20 @@ import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import MyIssues from "./pages/MyIssues.jsx";
 import IssueDetail from "./pages/IssueDetail.jsx";
+import AdminLogin from "./pages/admin/AdminLogin.jsx";
+import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
+import AdminIssues from "./pages/admin/AdminIssues.jsx";
+import AdminIssueDetail from "./pages/admin/AdminIssueDetail.jsx";
 function isAuth() {
   return !!localStorage.getItem("token");
+}
+function isAdmin() {
+  try {
+    const t = localStorage.getItem("token");
+    if (!t) return false;
+    const payload = JSON.parse(atob(t.split(".")[1]));
+    return payload.role === "admin" || payload.role === "staff";
+  } catch { return false; }
 }
 export default function App() {
   return (
@@ -35,6 +47,10 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/my-issues" element={isAuth() ? <MyIssues /> : <Navigate to="/login" />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={isAdmin() ? <AdminDashboard /> : <Navigate to="/admin/login" />} />
+          <Route path="/admin/issues" element={isAdmin() ? <AdminIssues /> : <Navigate to="/admin/login" />} />
+          <Route path="/admin/issues/:id" element={isAdmin() ? <AdminIssueDetail /> : <Navigate to="/admin/login" />} />
         </Routes>
       </main>
     </div>
