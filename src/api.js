@@ -66,3 +66,8 @@ export async function patchIssueStatus(id, new_status) {
   if (!r.ok) throw new Error("patch_status_failed");
   return r.json();
 }
+export async function getPhotos(id) {
+  const r = await fetch(BASE + "/issues/" + id + "/photos");
+  if (!r.ok) throw new Error("photos_failed");
+  return r.json();
+}

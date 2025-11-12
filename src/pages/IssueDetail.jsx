@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getIssue, getComments, postComment, toggleVote } from "../api.js";
+import { getIssue, getComments, postComment, toggleVote, getPhotos } from "../api.js";
 export default function IssueDetail() {
   const { id } = useParams();
   const [item, setItem] = useState(null);
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState("");
+  const [photos, setPhotos] = useState([]);
+  const [votes, setVotes] = useState(null);
   async function load() {
     const it = await getIssue(id);
     setItem(it);
     const cs = await getComments(id);
     setComments(cs);
+    const ps = await getPhotos(id);
+    setPhotos(ps);
   }
   useEffect(() => { load(); }, [id]);
   async function sendComment() {
@@ -19,7 +23,8 @@ export default function IssueDetail() {
     load();
   }
   async function vote() {
-    await toggleVote(id);
+    const r = await toggleVote(id);
+    setVotes(r.votes);
     load();
   }
   if (!item) return <div>Carregando...</div>;
@@ -31,10 +36,15 @@ export default function IssueDetail() {
       <div>Categoria: {item.category_id}</div>
       <div>Endereço: {item.address}</div>
       <div>Bairro: {item.neighborhood}</div>
-      <div className="photos">
-        <a href={`/api/v1/issues/${id}/photos`}>Fotos</a>
+      <div className="photos" style={{display:'grid',gridTemplateColumns:'repeat(auto-fill, minmax(160px,1fr))',gap:'8px'}}>
+        {photos.map(p => (
+          <a key={p.id} href={p.url} target="_blank" rel="noreferrer">
+            <img src={p.url} alt="foto" style={{width:'100%',borderRadius:'6px'}} />
+          </a>
+        ))}
       </div>
       <button onClick={vote}>Votar</button>
+      {votes !== null && <div>Votos: {votes}</div>}
       <h3>Comentários</h3>
       <div className="comments">
         {comments.map(c => (
