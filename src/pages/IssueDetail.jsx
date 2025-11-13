@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getIssue, getComments, postComment, toggleVote, getPhotos } from "../api.js";
+import { getIssue, getComments, postComment, toggleVote, getPhotos, getVotes, me } from "../api.js";
 export default function IssueDetail() {
   const { id } = useParams();
   const [item, setItem] = useState(null);
@@ -8,6 +8,7 @@ export default function IssueDetail() {
   const [content, setContent] = useState("");
   const [photos, setPhotos] = useState([]);
   const [votes, setVotes] = useState(null);
+  const [user, setUser] = useState(null);
   async function load() {
     const it = await getIssue(id);
     setItem(it);
@@ -15,6 +16,8 @@ export default function IssueDetail() {
     setComments(cs);
     const ps = await getPhotos(id);
     setPhotos(ps);
+    try { const v = await getVotes(id); setVotes(v.count); } catch {}
+    try { const u = await me(); setUser(u); } catch {}
   }
   useEffect(() => { load(); }, [id]);
   async function sendComment() {
@@ -48,9 +51,12 @@ export default function IssueDetail() {
       <h3>Comentários</h3>
       <div className="comments">
         {comments.map(c => (
-          <div key={c.id} className="comment">
+          <div key={c.id} className="comment" style={{display:'flex',gap:8,alignItems:'center'}}>
             <div>{c.content}</div>
             <div>{new Date(c.created_at).toLocaleString()}</div>
+            {user && (user.role === 'admin' || user.id === c.user_id) && (
+              <button onClick={async ()=>{ await (await import('../api.js')).deleteComment(c.id); load(); }}>Excluir</button>
+            )}
           </div>
         ))}
       </div>

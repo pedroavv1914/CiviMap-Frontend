@@ -46,6 +46,11 @@ export async function toggleVote(id) {
   if (!r.ok) throw new Error("vote_failed");
   return r.json();
 }
+export async function getVotes(id) {
+  const r = await fetch(BASE + "/issues/" + id + "/votes", { headers: { ...authHeader() } });
+  if (!r.ok) throw new Error("votes_failed");
+  return r.json();
+}
 export async function getComments(id) {
   const r = await fetch(BASE + "/issues/" + id + "/comments");
   if (!r.ok) throw new Error("comments_failed");
@@ -55,6 +60,11 @@ export async function postComment(id, content) {
   const r = await fetch(BASE + "/issues/" + id + "/comments", { method: "POST", headers: { "Content-Type": "application/json", ...authHeader() }, body: JSON.stringify({ content }) });
   if (!r.ok) throw new Error("comment_failed");
   return r.json();
+}
+export async function deleteComment(id) {
+  const r = await fetch(BASE + "/comments/" + id, { method: "DELETE", headers: { ...authHeader() } });
+  if (!r.ok) throw new Error("comment_delete_failed");
+  return true;
 }
 export async function getStatusHistory(id) {
   const r = await fetch(BASE + "/issues/" + id + "/status-history");
