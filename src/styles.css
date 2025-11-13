@@ -4,7 +4,9 @@
   --gray-dark:#374151; --gray-medium:#6B7280; --gray-light:#E5E7EB; --white:#FFFFFF;
 }
 .app{font-family:Inter,system-ui,Arial,sans-serif;color:var(--gray-dark)}
-.header{display:flex;gap:12px;padding:12px;border-bottom:1px solid var(--gray-light)}
+.header{display:flex;gap:12px;padding:12px;border-bottom:1px solid var(--gray-light);align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:8px}
+.brand-name{font-family:Montserrat,Inter,system-ui,Arial,sans-serif;font-weight:700;color:var(--blue-urban)}
 .header a{margin-right:12px;color:var(--blue-urban)}
 .form{display:flex;flex-direction:column;gap:8px;padding:12px}
 .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;padding:12px}

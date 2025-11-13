@@ -36,6 +36,10 @@ export default function App() {
   return (
     <div className="app">
       <header className="header">
+        <div className="brand">
+          <img src="/logo.png" alt="CiviMap" width={28} height={28} style={{borderRadius:6}} onError={(e)=>{e.currentTarget.style.display='none'}} />
+          <span className="brand-name">CiviMap</span>
+        </div>
         <nav>
           <Link to="/">Mapa</Link>
           <Link to="/new-issue">Nova denúncia</Link>
