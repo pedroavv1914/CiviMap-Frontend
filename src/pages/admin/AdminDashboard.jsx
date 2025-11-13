@@ -18,7 +18,13 @@ export default function AdminDashboard() {
   return (
     <AdminLayout>
       <div className="detail admin-dashboard">
-        <h2>Dashboard</h2>
+        <div className="admin-topbar">
+          <h2>Dashboard</h2>
+          <div className="admin-topbar-actions">
+            <div className="bell">🔔</div>
+            <div className="badge">7</div>
+          </div>
+        </div>
         <div className="admin-cards">
           {(["open","in_progress","resolved","closed"]).map(k => {
             const c = (stats.byStatus||[]).find(x=>x.status===k)?.count || 0;
@@ -56,19 +62,55 @@ export default function AdminDashboard() {
                 return <circle key={c.category} cx="110" cy="110" r="90" fill="transparent" stroke={colors[idx%colors.length]} strokeWidth="20" strokeDasharray={`${dash} ${gap}`} strokeDashoffset={offset} />;
               })}
             </svg>
+            <div className="donut-legend">
+              {(stats.byCategory||[]).map((c, idx) => {
+                const colors = ['#3B82F6','#10B981','#F59E0B','#EF4444','#6B7280'];
+                const pct = Math.round((c.count/totalByCategory)*100);
+                return (
+                  <div key={c.category} className="legend-item">
+                    <span className="dot" style={{background:colors[idx%colors.length]}}></span>
+                    <span className="label">{c.category}</span>
+                    <span className="value">{pct}%</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
-        <div>
-          <h3>Por Bairro</h3>
-          {(stats.byNeighborhood||[]).map(n => (
-            <div key={n.neighborhood} style={{display:'flex',alignItems:'center',gap:8}}>
-              <div style={{width:180}}>{n.neighborhood}</div>
-              <div style={{height:12,background:'#e5e5e5',flex:1,borderRadius:6}}>
-                <div style={{height:12,width:`${(n.count/maxNeighborhood)*100}%`,background:'#10b981',borderRadius:6}}></div>
+        <div className="admin-panels">
+          <div className="card admin-panel">
+            <h3>Issues por Bairro</h3>
+            {(stats.byNeighborhood||[]).map(n => (
+              <div key={n.neighborhood} style={{display:'flex',alignItems:'center',gap:8,margin:'6px 0'}}>
+                <div style={{width:180}}>{n.neighborhood}</div>
+                <div style={{height:12,background:'#e5e5e5',flex:1,borderRadius:6}}>
+                  <div style={{height:12,width:`${(n.count/maxNeighborhood)*100}%`,background:'#3B82F6',borderRadius:6}}></div>
+                </div>
+                <div>{n.count}</div>
               </div>
-              <div>{n.count}</div>
-            </div>
-          ))}
+            ))}
+          </div>
+          <div className="card admin-panel">
+            <h3>Recentes</h3>
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Issue</th>
+                  <th>Data</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {issues.slice(0,6).map(i => (
+                  <tr key={i.id}>
+                    <td>{i.title}</td>
+                    <td>{new Date(i.created_at).toLocaleDateString()}</td>
+                    <td><span className="tag" data-status={i.status}>{i.status}</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </AdminLayout>
