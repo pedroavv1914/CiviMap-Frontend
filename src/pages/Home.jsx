@@ -20,10 +20,14 @@ export default function Home() {
     load({ ...p, limit: 200 });
   }
   return (
-    <div>
+    <div className="container">
       <div className="hidden-desktop"><MobileHero /></div>
-      <FilterBar onChange={onFilters} />
-      <MapView center={center} markers={issues} />
+      <div className="panel filters-panel">
+        <FilterBar onChange={onFilters} />
+      </div>
+      <div className="panel map-panel">
+        <MapView center={center} markers={issues} />
+      </div>
     </div>
   );
 }

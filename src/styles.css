@@ -5,9 +5,11 @@
 }
 .app{font-family:Inter,system-ui,Arial,sans-serif;color:var(--gray-dark)}
 .header{display:flex;gap:12px;padding:12px;border-bottom:1px solid var(--gray-light);align-items:center;justify-content:space-between}
+.header{background:#fff;box-shadow:0 1px 8px rgba(0,0,0,0.06);position:sticky;top:0;z-index:10}
 .brand{display:flex;align-items:center;gap:8px}
 .brand-name{font-family:Montserrat,Inter,system-ui,Arial,sans-serif;font-weight:700;color:var(--blue-urban)}
-.header a{margin-right:12px;color:var(--blue-urban)}
+.header a{margin-right:12px;color:var(--blue-urban);padding:8px 12px;border-radius:8px;text-decoration:none}
+.header a:hover{background:rgba(37,99,235,0.08)}
 /* Admin layout */
 .admin-layout{display:flex;min-height:100vh;background:#f3f4f6}
 .admin-sidebar{width:240px;background:linear-gradient(180deg, var(--blue-dark), #0f1f4d);color:#fff;padding:16px;display:flex;flex-direction:column;gap:16px}
@@ -50,6 +52,12 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue-urb
 .btn-secondary{background:#fff;color:var(--blue-urban);border-color:var(--blue-urban)}
 .btn-secondary:hover{filter:brightness(0.98)}
 h1,h2{font-family:Montserrat,Inter,system-ui,Arial,sans-serif}
+/* layout */
+.container{max-width:1200px;margin:0 auto;padding:12px}
+.panel{background:#fff;border:1px solid var(--gray-light);border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);padding:12px;margin-bottom:12px}
+.filters-panel{display:flex;align-items:center}
+.map-panel .leaflet-container{height:65vh;border-radius:12px}
+.filters select,.filters input{height:36px;background:#fff}
 
 /* Mobile */
 .hidden-desktop{display:none}
