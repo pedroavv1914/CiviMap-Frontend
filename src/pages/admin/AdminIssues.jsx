@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getIssues } from "../../api.js";
 import StatusBadge from "../../components/StatusBadge.jsx";
+import AdminLayout from "../../components/AdminLayout.jsx";
 export default function AdminIssues() {
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState(0);
@@ -18,6 +19,7 @@ export default function AdminIssues() {
     setTotal(!Array.isArray(r) ? r.total : arr.length);
   }
   return (
+    <AdminLayout>
     <div className="detail">
       <h2>Issues</h2>
       <div className="filters">
@@ -62,5 +64,6 @@ export default function AdminIssues() {
         ))}
       </div>
     </div>
+    </AdminLayout>
   );
 }

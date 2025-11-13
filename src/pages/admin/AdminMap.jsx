@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import { getIssues } from "../../api.js";
+import AdminLayout from "../../components/AdminLayout.jsx";
 export default function AdminMap() {
   const [issues, setIssues] = useState([]);
   const [center, setCenter] = useState([-23.55, -46.63]);
@@ -16,6 +17,7 @@ export default function AdminMap() {
   }
   useEffect(() => { load(); }, []);
   return (
+    <AdminLayout>
     <div className="detail">
       <h2>Mapa de Ocorrências (Admin)</h2>
       <div className="filters">
@@ -59,5 +61,6 @@ export default function AdminMap() {
         })}
       </MapContainer>
     </div>
+    </AdminLayout>
   );
 }

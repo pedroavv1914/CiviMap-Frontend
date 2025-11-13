@@ -8,6 +8,18 @@
 .brand{display:flex;align-items:center;gap:8px}
 .brand-name{font-family:Montserrat,Inter,system-ui,Arial,sans-serif;font-weight:700;color:var(--blue-urban)}
 .header a{margin-right:12px;color:var(--blue-urban)}
+/* Admin layout */
+.admin-layout{display:flex;min-height:100vh;background:#f3f4f6}
+.admin-sidebar{width:240px;background:linear-gradient(180deg, var(--blue-dark), #0f1f4d);color:#fff;padding:16px;display:flex;flex-direction:column;gap:16px}
+.admin-sidebar nav{display:flex;flex-direction:column;gap:8px}
+.admin-sidebar a{color:#e5e7eb;text-decoration:none;padding:8px;border-radius:8px}
+.admin-sidebar a.active{background:rgba(255,255,255,0.12);color:#fff}
+.admin-sidebar .disabled{opacity:0.5;pointer-events:none}
+.admin-content{flex:1;padding:16px}
+.admin-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0}
+.admin-card{border:1px solid var(--gray-light);border-radius:12px;padding:16px;background:#fff}
+.admin-panels{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin:12px 0}
+.admin-panel{border:1px solid var(--gray-light);border-radius:12px;padding:12px;background:#fff}
 .form{display:flex;flex-direction:column;gap:8px;padding:12px}
 .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;padding:12px}
 .card{border:1px solid var(--gray-light);border-radius:12px;padding:12px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
@@ -43,4 +55,8 @@ h1,h2{font-family:Montserrat,Inter,system-ui,Arial,sans-serif}
   .card{padding:12px}
   .leaflet-container{height:50vh}
   .btn{width:100%}
+  .admin-layout{display:block}
+  .admin-sidebar{width:100%}
+  .admin-cards{grid-template-columns:1fr}
+  .admin-panels{grid-template-columns:1fr}
 }
