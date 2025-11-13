@@ -12,7 +12,7 @@ export default function Login() {
     <div className="form">
       <input placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} />
       <input placeholder="Senha" type="password" value={password} onChange={e=>setPassword(e.target.value)} />
-      <button onClick={submit}>Entrar</button>
+      <button className="btn btn-primary" onClick={submit}>Entrar</button>
     </div>
   );
 }

@@ -28,7 +28,7 @@ export default function NewIssue() {
       <input placeholder="Bairro" value={neighborhood} onChange={e=>setNeighborhood(e.target.value)} />
       <input type="file" multiple onChange={e=>setPhotos(Array.from(e.target.files||[]))} />
       <MapView center={[pos.lat, pos.lng]} markers={[{ id: "new", title, lat: pos.lat, lng: pos.lng }]} onClick={setPos} />
-      <button onClick={submit}>Enviar denúncia</button>
+      <button className="btn btn-primary" onClick={submit}>Enviar denúncia</button>
     </div>
   );
 }

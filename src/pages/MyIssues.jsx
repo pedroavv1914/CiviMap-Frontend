@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getIssues } from "../api.js";
+import StatusBadge from "../components/StatusBadge.jsx";
 export default function MyIssues() {
   const [items, setItems] = useState([]);
   const [userId, setUserId] = useState("");
@@ -16,8 +17,10 @@ export default function MyIssues() {
     <div className="list">
       {items.map(i => (
         <div key={i.id} className="card">
-          <div>{i.title}</div>
-          <div>{i.status}</div>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <div>{i.title}</div>
+            <StatusBadge status={i.status} />
+          </div>
           <a href={`/issue/${i.id}`}>Abrir</a>
         </div>
       ))}

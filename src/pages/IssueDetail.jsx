@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getIssue, getComments, postComment, toggleVote, getPhotos, getVotes, me } from "../api.js";
+import StatusBadge from "../components/StatusBadge.jsx";
 export default function IssueDetail() {
   const { id } = useParams();
   const [item, setItem] = useState(null);
@@ -35,7 +36,7 @@ export default function IssueDetail() {
     <div className="detail">
       <h2>{item.title}</h2>
       <div>{item.description}</div>
-      <div>Status: {item.status}</div>
+      <div style={{display:'flex',alignItems:'center',gap:8}}>Status: <StatusBadge status={item.status} /></div>
       <div>Categoria: {item.category_id}</div>
       <div>Endereço: {item.address}</div>
       <div>Bairro: {item.neighborhood}</div>
@@ -46,7 +47,7 @@ export default function IssueDetail() {
           </a>
         ))}
       </div>
-      <button onClick={vote}>Votar</button>
+      <button className="btn btn-secondary" onClick={vote}>Votar</button>
       {votes !== null && <div>Votos: {votes}</div>}
       <h3>Comentários</h3>
       <div className="comments">

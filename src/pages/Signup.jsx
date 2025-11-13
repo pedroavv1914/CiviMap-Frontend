@@ -13,7 +13,7 @@ export default function Signup() {
       <input placeholder="Nome" value={name} onChange={e=>setName(e.target.value)} />
       <input placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} />
       <input placeholder="Senha" type="password" value={password} onChange={e=>setPassword(e.target.value)} />
-      <button onClick={submit}>Registrar</button>
+      <button className="btn btn-primary" onClick={submit}>Registrar</button>
     </div>
   );
 }

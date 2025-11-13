@@ -42,14 +42,15 @@ export default function AdminMap() {
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {issues.map(i => {
           const p = Math.max(0, Number(i.priority_score || 0));
-          const r = 8 + Math.min(40, p * 4);
-          const color = p >= 10 ? "#ef4444" : p >= 5 ? "#f59e0b" : "#10b981";
+          const r = 8 + Math.min(40, p * 3);
+          const color = i.status === 'open' ? '#EF4444' : i.status === 'in_progress' ? '#F59E0B' : i.status === 'resolved' ? '#10B981' : i.status === 'closed' ? '#6B7280' : '#3B82F6';
           return (
-            <CircleMarker key={i.id} center={[i.lat, i.lng]} radius={r} pathOptions={{ color, fillColor: color, fillOpacity: 0.4 }}>
+            <CircleMarker key={i.id} center={[i.lat, i.lng]} radius={r} pathOptions={{ color, fillColor: color, fillOpacity: 0.35 }}>
               <Popup>
                 <div>
                   <div>{i.title}</div>
                   <div>Prioridade: {i.priority_score || 0}</div>
+                  <div>Status: {i.status}</div>
                   <a href={`/admin/issues/${i.id}`}>Abrir</a>
                 </div>
               </Popup>

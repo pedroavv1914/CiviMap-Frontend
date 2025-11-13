@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getIssue, getStatusHistory, patchIssueStatus } from "../../api.js";
+import StatusBadge from "../../components/StatusBadge.jsx";
 export default function AdminIssueDetail() {
   const { id } = useParams();
   const [item, setItem] = useState(null);
@@ -21,7 +22,7 @@ export default function AdminIssueDetail() {
   return (
     <div className="detail">
       <h2>{item.title}</h2>
-      <div>Status atual: {item.status}</div>
+      <div style={{display:'flex',alignItems:'center',gap:8}}>Status atual: <StatusBadge status={item.status} /></div>
       <select value={newStatus} onChange={e=>setNewStatus(e.target.value)}>
         <option value="in_review">Em análise</option>
         <option value="in_progress">Em andamento</option>
