@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MapView from "../components/MapView.jsx";
 import FilterBar from "../components/FilterBar.jsx";
+import MobileHero from "../components/MobileHero.jsx";
 import { getIssues } from "../api.js";
 export default function Home() {
   const [issues, setIssues] = useState([]);
@@ -20,6 +21,7 @@ export default function Home() {
   }
   return (
     <div>
+      <div className="hidden-desktop"><MobileHero /></div>
       <FilterBar onChange={onFilters} />
       <MapView center={center} markers={issues} />
     </div>
