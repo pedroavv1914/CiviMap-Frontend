@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import { getIssues } from "../../api.js";
 export default function AdminIssues() {
   const [items, setItems] = useState([]);
+  const [total, setTotal] = useState(0);
   const [status, setStatus] = useState("");
   const [category, setCategory] = useState("");
   const [neighborhood, setNeighborhood] = useState("");
   const [city, setCity] = useState("");
+  const [limit, setLimit] = useState(20);
+  const [offset, setOffset] = useState(0);
   useEffect(()=>{ load(); }, []);
   async function load() {
-    const r = await getIssues({ status, category, neighborhood, city, sort: "date", limit: 200 });
-    setItems(r);
+    const r = await getIssues({ status, category, neighborhood, city, sort: "date", limit, offset, with_count: true });
+    const arr = Array.isArray(r) ? r : r.items;
+    setItems(arr);
+    setTotal(!Array.isArray(r) ? r.total : arr.length);
   }
   return (
     <div className="detail">
@@ -32,7 +37,17 @@ export default function AdminIssues() {
         </select>
         <input placeholder="Bairro" value={neighborhood} onChange={e=>setNeighborhood(e.target.value)} />
         <input placeholder="Cidade" value={city} onChange={e=>setCity(e.target.value)} />
-        <button onClick={load}>Aplicar</button>
+        <button onClick={() => { setOffset(0); load(); }}>Aplicar</button>
+      </div>
+      <div style={{display:'flex',gap:8,alignItems:'center',padding:'0 12px'}}>
+        <span>Total: {total}</span>
+        <button disabled={offset===0} onClick={()=>{ setOffset(Math.max(0, offset - limit)); load(); }}>Anterior</button>
+        <button disabled={offset + limit >= total} onClick={()=>{ setOffset(offset + limit); load(); }}>Próxima</button>
+        <select value={limit} onChange={e=>{ setLimit(Number(e.target.value)); setOffset(0); load(); }}>
+          <option value={10}>10</option>
+          <option value={20}>20</option>
+          <option value={50}>50</option>
+        </select>
       </div>
       <div className="list">
         {items.map(i => (
