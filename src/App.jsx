@@ -10,6 +10,7 @@ import AdminLogin from "./pages/admin/AdminLogin.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import AdminIssues from "./pages/admin/AdminIssues.jsx";
 import AdminIssueDetail from "./pages/admin/AdminIssueDetail.jsx";
+import AdminMap from "./pages/admin/AdminMap.jsx";
 function isAuth() {
   return !!localStorage.getItem("token");
 }
@@ -39,6 +40,7 @@ export default function App() {
           <Link to="/">Mapa</Link>
           <Link to="/new-issue">Nova denúncia</Link>
           <Link to="/my-issues">Minhas denúncias</Link>
+          {isAdmin() && <Link to="/admin/map">Mapa Admin</Link>}
           {isAuth() ? (
             <>
               <span>{user ? `Olá, ${user.name}` : ""}</span>
@@ -64,6 +66,7 @@ export default function App() {
           <Route path="/admin/dashboard" element={isAdmin() ? <AdminDashboard /> : <Navigate to="/admin/login" />} />
           <Route path="/admin/issues" element={isAdmin() ? <AdminIssues /> : <Navigate to="/admin/login" />} />
           <Route path="/admin/issues/:id" element={isAdmin() ? <AdminIssueDetail /> : <Navigate to="/admin/login" />} />
+          <Route path="/admin/map" element={isAdmin() ? <AdminMap /> : <Navigate to="/admin/login" />} />
         </Routes>
       </main>
     </div>
